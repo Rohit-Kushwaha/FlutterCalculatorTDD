@@ -117,5 +117,16 @@ void main() {
 
       expect(find.text("Result: 2"), findsOneWidget);
     });
+
+    testWidgets('calculates sum with long delimiter',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MyApp());
+
+      await tester.enterText(find.byType(TextField), '//[***]\n1***2***3');
+      await tester.tap(find.text("Calculate"));
+      await tester.pump();
+
+      expect(find.text("Result: 6"), findsOneWidget);
+    });
   });
 }
