@@ -4,19 +4,23 @@ class StringCalculator {
 
     String delimiterPattern = '[,\\n]'; // default delimiters: comma or newline
 
-    // Check for custom delimiter at the beginning
+    // Check for custom delimiters at the beginning
     if (numbers.startsWith('//')) {
       final splitIndex = numbers.indexOf('\n');
       if (splitIndex != -1) {
         final delimiterLine = numbers.substring(2, splitIndex);
 
-        // Support delimiters of any length using [delimiter] format
-        if (delimiterLine.startsWith('[') && delimiterLine.endsWith(']')) {
-          final customDelimiter =
-              delimiterLine.substring(1, delimiterLine.length - 1);
-          delimiterPattern = RegExp.escape(customDelimiter);
+        // Multiple delimiters: //[delim1][delim2]...
+        final regex = RegExp(r'\[(.*?)\]');
+        final matches = regex.allMatches(delimiterLine);
+
+        if (matches.isNotEmpty) {
+          // Escape each delimiter and join with |
+          final escapedDelimiters =
+              matches.map((m) => RegExp.escape(m.group(1)!)).join('|');
+          delimiterPattern = escapedDelimiters;
         } else {
-          // single-character delimiter (old format)
+          // Single-character delimiter (old format)
           delimiterPattern = RegExp.escape(delimiterLine);
         }
 
