@@ -51,5 +51,16 @@ void main() {
 
       expect(find.text("Result: 10"), findsOneWidget);
     });
+
+    testWidgets('shows error for more than two numbers',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MyApp());
+
+      await tester.enterText(find.byType(TextField), "1,2,3");
+      await tester.tap(find.text("Calculate"));
+      await tester.pump();
+
+      expect(find.textContaining("Error:"), findsOneWidget);
+    });
   });
 }
