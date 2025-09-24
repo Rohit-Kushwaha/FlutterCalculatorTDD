@@ -63,5 +63,15 @@ void main() {
 
     //   expect(find.textContaining("Error:"), findsOneWidget);
     // });
+
+    testWidgets('calculates sum of many numbers', (WidgetTester tester) async {
+      await tester.pumpWidget(const MyApp());
+
+      await tester.enterText(find.byType(TextField), "1,2,3,4,5");
+      await tester.tap(find.text("Calculate"));
+      await tester.pump();
+
+      expect(find.text("Result: 15"), findsOneWidget);
+    });
   });
 }
