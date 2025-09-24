@@ -74,15 +74,26 @@ void main() {
       expect(find.text("Result: 15"), findsOneWidget);
     });
 
-    testWidgets('calculates sum with newlines and commas',
+    testWidgets('calculates sum with custom delimiter',
         (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
-      await tester.enterText(find.byType(TextField), '1\n2,3');
 
+      await tester.enterText(find.byType(TextField), '//;\n1;2');
       await tester.tap(find.text("Calculate"));
       await tester.pump();
 
-      expect(find.text("Result: 6"), findsOneWidget);
+      expect(find.text("Result: 3"), findsOneWidget);
+    });
+
+    testWidgets('calculates sum with another custom delimiter',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MyApp());
+
+      await tester.enterText(find.byType(TextField), '//|\n4|5|6');
+      await tester.tap(find.text("Calculate"));
+      await tester.pump();
+
+      expect(find.text("Result: 15"), findsOneWidget);
     });
   });
 }
