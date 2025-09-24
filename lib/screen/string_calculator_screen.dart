@@ -38,6 +38,8 @@ class _StringCalculatorScreenState extends State<StringCalculatorScreen> {
             const Text("Enter numbers (comma separated):"),
             TextField(
               controller: _controller,
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "e.g. 1,2",
