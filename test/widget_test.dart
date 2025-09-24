@@ -31,5 +31,25 @@ void main() {
 
       expect(find.text("Result: 0"), findsOneWidget);
     });
+
+    testWidgets('calculates sum of one number', (WidgetTester tester) async {
+      await tester.pumpWidget(const MyApp());
+
+      await tester.enterText(find.byType(TextField), "5");
+      await tester.tap(find.text("Calculate"));
+      await tester.pump();
+
+      expect(find.text("Result: 5"), findsOneWidget);
+    });
+
+    testWidgets('calculates sum of two numbers', (WidgetTester tester) async {
+      await tester.pumpWidget(const MyApp());
+
+      await tester.enterText(find.byType(TextField), "4,6");
+      await tester.tap(find.text("Calculate"));
+      await tester.pump();
+
+      expect(find.text("Result: 10"), findsOneWidget);
+    });
   });
 }
