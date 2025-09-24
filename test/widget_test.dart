@@ -106,5 +106,16 @@ void main() {
 
       expect(find.textContaining("Negatives not allowed: -2"), findsOneWidget);
     });
+
+    testWidgets('ignores numbers greater than 1000',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MyApp());
+
+      await tester.enterText(find.byType(TextField), '2,1001');
+      await tester.tap(find.text("Calculate"));
+      await tester.pump();
+
+      expect(find.text("Result: 2"), findsOneWidget);
+    });
   });
 }

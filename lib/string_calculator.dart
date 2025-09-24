@@ -21,13 +21,17 @@ class StringCalculator {
         .where((s) => s.isNotEmpty)
         .toList();
 
-    // Parse numbers and check for negatives
+    // Parse numbers
     List<int> nums = parts.map(int.parse).toList();
-    List<int> negatives = nums.where((n) => n < 0).toList();
 
+    // Check for negatives
+    List<int> negatives = nums.where((n) => n < 0).toList();
     if (negatives.isNotEmpty) {
       throw FormatException('Negatives not allowed: ${negatives.join(", ")}');
     }
+
+    // Ignore numbers greater than 1000
+    nums = nums.where((n) => n <= 1000).toList();
 
     // Sum numbers
     int sum = nums.fold(0, (prev, n) => prev + n);
