@@ -10,12 +10,12 @@ class StringCalculator {
       if (splitIndex != -1) {
         final delimiterLine = numbers.substring(2, splitIndex);
 
-        // Multiple delimiters: //[delim1][delim2]...
+        // Match all delimiters in square brackets
         final regex = RegExp(r'\[(.*?)\]');
         final matches = regex.allMatches(delimiterLine);
 
         if (matches.isNotEmpty) {
-          // Escape each delimiter and join with |
+          // Escape each delimiter and join with | for regex split
           final escapedDelimiters =
               matches.map((m) => RegExp.escape(m.group(1)!)).join('|');
           delimiterPattern = escapedDelimiters;
