@@ -21,10 +21,16 @@ class StringCalculator {
         .where((s) => s.isNotEmpty)
         .toList();
 
-    int sum = 0;
-    for (final p in parts) {
-      sum += int.parse(p);
+    // Parse numbers and check for negatives
+    List<int> nums = parts.map(int.parse).toList();
+    List<int> negatives = nums.where((n) => n < 0).toList();
+
+    if (negatives.isNotEmpty) {
+      throw FormatException('Negatives not allowed: ${negatives.join(", ")}');
     }
+
+    // Sum numbers
+    int sum = nums.fold(0, (prev, n) => prev + n);
     return sum;
   }
 }

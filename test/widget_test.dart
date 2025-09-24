@@ -95,5 +95,16 @@ void main() {
 
       expect(find.text("Result: 15"), findsOneWidget);
     });
+
+    testWidgets('shows error for negative numbers',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MyApp());
+
+      await tester.enterText(find.byType(TextField), '1,-2,3');
+      await tester.tap(find.text("Calculate"));
+      await tester.pump();
+
+      expect(find.textContaining("Negatives not allowed: -2"), findsOneWidget);
+    });
   });
 }
